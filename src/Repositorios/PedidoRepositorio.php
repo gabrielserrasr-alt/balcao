@@ -26,7 +26,8 @@ final class PedidoRepositorio
         $total->execute($parametros);
 
         $consulta = $banco->prepare(
-            "SELECT p.*, c.nome AS cliente FROM pedidos p JOIN clientes c ON c.id = p.cliente_id
+            "SELECT p.*, c.nome AS cliente, c.telefone AS cliente_telefone, c.email AS cliente_email
+             FROM pedidos p JOIN clientes c ON c.id = p.cliente_id
              $onde ORDER BY p.criado_em DESC LIMIT :limite OFFSET :inicio"
         );
         foreach ($parametros as $nome => $valor) {

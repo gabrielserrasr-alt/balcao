@@ -34,6 +34,8 @@ if ($caminho === '/api/pedidos' && $metodo === 'GET') {
         'pedidos' => array_map(fn (array $p) => [
             'id' => (int) $p['id'],
             'cliente' => $p['cliente'],
+            'cliente_telefone' => $p['cliente_telefone'],
+            'cliente_email' => $p['cliente_email'],
             'descricao' => $p['descricao'],
             'valor' => (float) $p['valor'],
             'status' => $p['status'],

@@ -77,7 +77,7 @@ curl -X POST -H "Authorization: Bearer SEU_TOKEN" -H "Content-Type: application/
 | `401` | Token ausente ou errado |
 | `422` | Dados inválidos, com o erro de cada campo |
 
-O `valor` pode ir como número (`1250.5`) ou texto no formato brasileiro (`"1.250,50"`, `"1.250"`).
+Cada pedido da lista vem com o nome, o telefone e o e-mail do cliente, que o [Balcão Sheets](https://github.com/gabrielserrasr-alt/balcao-sheets) usa para montar as mensagens. O `valor` pode ir como número (`1250.5`) ou texto no formato brasileiro (`"1.250,50"`, `"1.250"`).
 
 ## Estrutura
 
