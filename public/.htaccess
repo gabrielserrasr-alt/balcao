@@ -1,0 +1,5 @@
+RewriteEngine On
+# Apache não repassa o cabeçalho Authorization ao PHP sem isto (usado pela API)
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]

@@ -1,0 +1,29 @@
+services:
+  app:
+    build: ./docker/php
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/painel
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: ${DB_NOME}
+      MYSQL_USER: ${DB_USUARIO}
+      MYSQL_PASSWORD: ${DB_SENHA}
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d:ro
+      - dados:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${DB_USUARIO}", "-p${DB_SENHA}"]
+      interval: 5s
+      retries: 20
+
+volumes:
+  dados:
