@@ -8,7 +8,8 @@ Painel administrativo em **PHP 8.3 + MySQL 8** para pequenas empresas: pedidos, 
 
 - **Login** com senha criptografada (`password_hash`), sessão renovada no login e bloqueio de 5 minutos depois de 5 tentativas erradas
 - **Clientes:** cadastro, edição, busca e exclusão protegida (cliente com pedidos não é apagado)
-- **Pedidos:** cadastro com valor no formato brasileiro (`1.250,00`), status, busca, filtro e paginação, com data e hora de criação e da última alteração
+- **Pedidos:** cadastro com status, busca, filtro e paginação, com data e hora de criação e da última alteração
+- **Valor com máscara de banco:** o campo só aceita números e preenche da direita para a esquerda, como no Pix (`125000` vira `1.250,00`)
 - **Visão geral:** faturamento do mês, pendentes e canceladas, pedidos por status, últimos 6 meses e melhores clientes
 - **API JSON** com token para listar e criar pedidos
 
@@ -23,7 +24,7 @@ Painel administrativo em **PHP 8.3 + MySQL 8** para pequenas empresas: pedidos, 
 | Pendente | Não | Aparece separado e só entra quando vira pago |
 | Cancelado | Nunca | É desistência; aparece separado para acompanhar |
 
-O mês conta pela data de criação do pedido. A data da última alteração é gravada pelo próprio MySQL (`ON UPDATE CURRENT_TIMESTAMP`), então nenhuma tela esquece de registrá-la.
+O mês conta pela data de criação do pedido, no horário de Brasília (o MySQL e o PHP rodam em `America/Sao_Paulo`, então o mês vira à meia-noite, e não às 21h do UTC). A data da última alteração é gravada pelo próprio MySQL (`ON UPDATE CURRENT_TIMESTAMP`), então nenhuma tela esquece de registrá-la.
 
 ## Segurança
 
@@ -75,6 +76,8 @@ curl -X POST -H "Authorization: Bearer SEU_TOKEN" -H "Content-Type: application/
 | `201` | Pedido criado, com o `id` |
 | `401` | Token ausente ou errado |
 | `422` | Dados inválidos, com o erro de cada campo |
+
+O `valor` pode ir como número (`1250.5`) ou texto no formato brasileiro (`"1.250,50"`, `"1.250"`).
 
 ## Estrutura
 

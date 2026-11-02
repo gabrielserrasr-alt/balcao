@@ -1,7 +1,8 @@
 FROM php:8.3-apache
 
 RUN docker-php-ext-install pdo_mysql \
-    && a2enmod rewrite
+    && a2enmod rewrite \
+    && echo "date.timezone = America/Sao_Paulo" > "$PHP_INI_DIR/conf.d/fuso.ini"
 
 # O site sai de public/: o resto do projeto (src, views, .env) não fica acessível pelo navegador
 ENV APACHE_DOCUMENT_ROOT=/var/www/painel/public

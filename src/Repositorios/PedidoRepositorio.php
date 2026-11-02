@@ -69,12 +69,20 @@ final class PedidoRepositorio
         Banco::conexao()->prepare('DELETE FROM pedidos WHERE id = ?')->execute([$id]);
     }
 
-    /** Aceita "1.234,56" (formato brasileiro) e "1234.56". */
+    /**
+     * Aceita "R$ 1.234,56", "1234,56", "1.250" (mil duzentos e cinquenta) e números do JSON (1234.56).
+     * Ponto seguido de grupos de 3 dígitos é separador de milhar, como no Brasil.
+     */
     public static function numero(string|float|int $valor): float
     {
-        $texto = trim((string) $valor);
+        if (!is_string($valor)) {
+            return round((float) $valor, 2);
+        }
+        $texto = trim(str_replace(['R$', ' ', "\u{00A0}"], '', $valor));
         if (str_contains($texto, ',')) {
             $texto = str_replace(['.', ','], ['', '.'], $texto);
+        } elseif (preg_match('/^\d{1,3}(\.\d{3})+$/', $texto)) {
+            $texto = str_replace('.', '', $texto);
         }
         return is_numeric($texto) ? round((float) $texto, 2) : -1.0;
     }

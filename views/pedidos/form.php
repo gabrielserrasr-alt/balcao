@@ -21,7 +21,8 @@ if (is_numeric($valor)) {
   <div class="campo"><label for="descricao">Descrição</label><input id="descricao" name="descricao" value="<?= e($pedido['descricao'] ?? '') ?>" maxlength="200">
     <?php if (isset($erros['descricao'])): ?><div class="erro"><?= e($erros['descricao']) ?></div><?php endif; ?></div>
   <div class="linha">
-    <div class="campo"><label for="valor">Valor (R$)</label><input id="valor" name="valor" inputmode="decimal" value="<?= e((string) $valor) ?>" placeholder="1.250,00">
+    <div class="campo"><label for="valor">Valor</label>
+      <div class="dinheiro"><span>R$</span><input id="valor" name="valor" inputmode="numeric" autocomplete="off" data-dinheiro value="<?= e((string) $valor) ?>" placeholder="0,00"></div>
       <?php if (isset($erros['valor'])): ?><div class="erro"><?= e($erros['valor']) ?></div><?php endif; ?></div>
     <div class="campo"><label for="status">Status</label>
       <select id="status" name="status">
@@ -30,4 +31,5 @@ if (is_numeric($valor)) {
   </div>
   <div style="display:flex;gap:10px"><button class="botao principal">Salvar</button><a class="botao" href="/pedidos">Cancelar</a></div>
 </form>
+<script src="/assets/dinheiro.js?v=<?= filemtime(__DIR__ . '/../../public/assets/dinheiro.js') ?>" defer></script>
 <?php endif; ?>

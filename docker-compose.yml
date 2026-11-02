@@ -6,6 +6,8 @@ services:
     volumes:
       - ./:/var/www/painel
     env_file: .env
+    environment:
+      TZ: America/Sao_Paulo
     depends_on:
       db:
         condition: service_healthy
@@ -17,6 +19,8 @@ services:
       MYSQL_USER: ${DB_USUARIO}
       MYSQL_PASSWORD: ${DB_SENHA}
       MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      # Mesmo fuso do PHP: sem isso o MySQL usa UTC, as datas saem 3h adiantadas e o mês vira às 21h
+      TZ: America/Sao_Paulo
     volumes:
       - ./database:/docker-entrypoint-initdb.d:ro
       - dados:/var/lib/mysql

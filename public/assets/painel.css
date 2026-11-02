@@ -118,6 +118,9 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
 
 /* Formulários e botões */
 input,select{font:inherit;color:var(--texto);background:#0d0f11;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:11px 14px;width:100%}
+.dinheiro{position:relative}
+.dinheiro span{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--fraco);pointer-events:none}
+.dinheiro input{padding-left:44px;font-variant-numeric:tabular-nums}
 input:focus,select:focus{outline:none;border-color:var(--acento);box-shadow:0 0 0 3px color-mix(in srgb,var(--acento) 20%,transparent)}
 label{display:block;font-size:13px;color:var(--fraco);margin-bottom:6px}
 .campo{margin-bottom:16px}
